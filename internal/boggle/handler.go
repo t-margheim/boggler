@@ -1,7 +1,6 @@
 package boggle
 
 import (
-	"fmt"
 	"net/http"
 	"sort"
 
@@ -35,11 +34,14 @@ func (h *handler) GetWords(c echo.Context) error {
 	err := h.svc.validateBoard(board)
 	if err != nil {
 		h.log.Warnw("invalid board submitted",
-			"board", board,
+			"board", input,
 			"error", err.Error())
-		return echo.NewHTTPError(
+		return c.JSON(
 			http.StatusBadRequest,
-			fmt.Sprintf("board is invalid: %s", err.Error()),
+			errorResponse{
+				Error:   err.Error(),
+				Message: "invalid board submitted",
+			},
 		)
 	}
 
