@@ -28,11 +28,13 @@ type service struct {
 
 func (s *service) solveBoard(board []rune) ([]string, error) {
 	resultsMap := make(map[string]struct{})
-	for i, startCharacter := range board {
+	// for i, startCharacter := range board {
+	for i := range board {
 		boardCopy := make([]rune, len(board))
 		copy(boardCopy, board)
 
-		s.solveStartPosition(i, boardCopy, toString(startCharacter), resultsMap)
+		// s.solveStartPosition(i, boardCopy, toString(startCharacter), resultsMap)
+		s.solveStartPosition(i, boardCopy, "", resultsMap)
 	}
 
 	var words []string
@@ -72,6 +74,10 @@ func (s *service) solveStartPosition(pos int, board []rune, current string, resu
 		"current_word", current,
 	)
 
+	newWord := strings.Builder{}
+	newWord.WriteString(current)
+	newWord.WriteRune(board[pos])
+
 	matches := s.tr.PrefixMatch(current)
 	if matches == nil {
 		return
@@ -89,36 +95,24 @@ func (s *service) solveStartPosition(pos int, board []rune, current string, resu
 	// move right
 	rightIdx := pos + 1
 	if isSameRow(pos, rightIdx) {
-		newWord := strings.Builder{}
-		newWord.WriteString(current)
-		newWord.WriteRune(board[rightIdx])
 		s.solveStartPosition(rightIdx, board, newWord.String(), results)
 	}
 
 	// move left
 	leftIdx := pos - 1
 	if leftIdx >= 0 && isSameRow(pos, leftIdx) {
-		newWord := strings.Builder{}
-		newWord.WriteString(current)
-		newWord.WriteRune(board[leftIdx])
 		s.solveStartPosition(leftIdx, board, newWord.String(), results)
 	}
 
 	// move down
 	downIdx := pos + numCols
 	if downIdx < boardSize {
-		newWord := strings.Builder{}
-		newWord.WriteString(current)
-		newWord.WriteRune(board[downIdx])
 		s.solveStartPosition(downIdx, board, newWord.String(), results)
 	}
 
 	// move up
 	upIdx := pos - numCols
 	if upIdx >= 0 {
-		newWord := strings.Builder{}
-		newWord.WriteString(current)
-		newWord.WriteRune(board[upIdx])
 		s.solveStartPosition(upIdx, board, newWord.String(), results)
 	}
 }

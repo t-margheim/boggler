@@ -56,7 +56,7 @@ func Test_service_solveStartPosition(t *testing.T) {
 					'x', 'x', 'x', 'x',
 					'x', 'x', 'x', 'x',
 				},
-				current: "a",
+				current: "",
 				results: map[string]struct{}{},
 			},
 			wantResults: map[string]struct{}{
@@ -73,7 +73,7 @@ func Test_service_solveStartPosition(t *testing.T) {
 					'x', 'x', 'x', 'x',
 					'x', 'x', 'x', 'x',
 				},
-				current: "a",
+				current: "",
 				results: map[string]struct{}{},
 			},
 			wantResults: map[string]struct{}{
@@ -90,7 +90,7 @@ func Test_service_solveStartPosition(t *testing.T) {
 					't', 'x', 'x', 'x',
 					'x', 'x', 'x', 'x',
 				},
-				current: "a",
+				current: "",
 				results: map[string]struct{}{},
 			},
 			wantResults: map[string]struct{}{
@@ -107,7 +107,7 @@ func Test_service_solveStartPosition(t *testing.T) {
 					'a', 'x', 'x', 'x',
 					'x', 'x', 'x', 'x',
 				},
-				current: "a",
+				current: "",
 				results: map[string]struct{}{},
 			},
 			wantResults: map[string]struct{}{
