@@ -71,7 +71,7 @@ func (s *service) solveStartPosition(pos int, board []rune, current string, resu
 
 	newWord := strings.Builder{}
 	newWord.WriteString(current)
-	newWord.WriteRune(board[pos])
+	newWord.WriteString(toString(board[pos]))
 
 	matches := s.tr.PrefixMatch(current)
 	if matches == nil {

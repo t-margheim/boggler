@@ -194,3 +194,55 @@ func Test_service_solveStartPosition(t *testing.T) {
 		})
 	}
 }
+
+func Test_service_solveStartPosition_Qu(t *testing.T) {
+	testTrie := trie.NewTrie()
+	testTrie.Insert("quilt")
+
+	rawLog, err := zap.NewDevelopmentConfig().Build()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	sugarLog := rawLog.Sugar()
+
+	type args struct {
+		pos     int
+		board   []rune
+		current string
+		results map[string]struct{}
+	}
+	tests := []struct {
+		name        string
+		args        args
+		wantResults map[string]struct{}
+	}{
+		{
+			name: "quilt",
+			args: args{
+				pos: 9,
+				board: []rune{
+					'x', 'l', 'x', 'x',
+					'x', 'i', 't', 'x',
+					'x', 'q', 'x', 'x',
+					'x', 'x', 'x', 'x',
+				},
+				current: "",
+				results: map[string]struct{}{},
+			},
+			wantResults: map[string]struct{}{
+				"quilt": {},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			s := &service{
+				tr:  testTrie,
+				log: sugarLog,
+			}
+			s.solveStartPosition(tt.args.pos, tt.args.board, tt.args.current, tt.args.results)
+			assert.Equal(t, tt.wantResults, tt.args.results)
+		})
+	}
+}
