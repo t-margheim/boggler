@@ -43,15 +43,7 @@ func (h *handler) GetWords(c echo.Context) error {
 		)
 	}
 
-	ww, err := h.svc.solveBoard(board)
-	if err != nil {
-		h.log.Errorw("failed to process board",
-			"board", board,
-			"error", err.Error())
-		return echo.NewHTTPError(
-			http.StatusInternalServerError,
-		)
-	}
+	ww := h.svc.solveBoard(board)
 
 	sort.Strings(ww)
 	return c.JSON(http.StatusOK, response{Words: ww})

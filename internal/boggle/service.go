@@ -9,7 +9,7 @@ import (
 )
 
 type Service interface {
-	solveBoard(board []rune) (wordList []string, err error)
+	solveBoard(board []rune) (wordList []string)
 	validateBoard(board []rune) error
 }
 
@@ -26,7 +26,7 @@ type service struct {
 	log *zap.SugaredLogger
 }
 
-func (s *service) solveBoard(board []rune) ([]string, error) {
+func (s *service) solveBoard(board []rune) []string {
 	resultsMap := make(map[string]struct{})
 	for i := range board {
 		s.solveStartPosition(i, copyBoard(board), "", resultsMap)
@@ -37,7 +37,7 @@ func (s *service) solveBoard(board []rune) ([]string, error) {
 		words = append(words, k)
 	}
 
-	return words, nil
+	return words
 }
 
 func (s *service) validateBoard(board []rune) error {
