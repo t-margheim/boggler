@@ -3,6 +3,7 @@ package boggle
 import (
 	"fmt"
 	"net/http"
+	"sort"
 
 	"github.com/labstack/echo/v4"
 	"go.uber.org/zap"
@@ -52,5 +53,6 @@ func (h *handler) GetWords(c echo.Context) error {
 		)
 	}
 
+	sort.Strings(ww)
 	return c.JSON(http.StatusOK, response{Words: ww})
 }

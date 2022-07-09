@@ -28,13 +28,8 @@ type service struct {
 
 func (s *service) solveBoard(board []rune) ([]string, error) {
 	resultsMap := make(map[string]struct{})
-	// for i, startCharacter := range board {
 	for i := range board {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-
-		// s.solveStartPosition(i, boardCopy, toString(startCharacter), resultsMap)
-		s.solveStartPosition(i, boardCopy, "", resultsMap)
+		s.solveStartPosition(i, copyBoard(board), "", resultsMap)
 	}
 
 	var words []string
@@ -95,65 +90,49 @@ func (s *service) solveStartPosition(pos int, board []rune, current string, resu
 	// move right
 	rightIdx := pos + 1
 	if isSameRow(pos, rightIdx) {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(rightIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(rightIdx, copyBoard(board), newWord.String(), results)
 	}
 
 	// move right down
 	rightDownIdx := pos + 1 + numCols
 	if rightDownIdx < boardSize && isSameRow(pos+numCols, rightDownIdx) {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(rightDownIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(rightDownIdx, copyBoard(board), newWord.String(), results)
 	}
 
 	// move down
 	downIdx := pos + numCols
 	if downIdx < boardSize {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(downIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(downIdx, copyBoard(board), newWord.String(), results)
 	}
 
 	// move left down
 	leftDownIdx := pos - 1 + numCols
 	if leftDownIdx < boardSize && isSameRow(pos+numCols, leftDownIdx) {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(leftDownIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(leftDownIdx, copyBoard(board), newWord.String(), results)
 	}
 
 	// move left
 	leftIdx := pos - 1
 	if leftIdx >= 0 && isSameRow(pos, leftIdx) {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(leftIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(leftIdx, copyBoard(board), newWord.String(), results)
 	}
 
 	// move left up
 	leftUpIdx := pos - 1 - numCols
 	if leftUpIdx >= 0 && isSameRow(pos-numCols, leftUpIdx) {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(leftUpIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(leftUpIdx, copyBoard(board), newWord.String(), results)
 	}
 
 	// move up
 	upIdx := pos - numCols
 	if upIdx >= 0 {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(upIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(upIdx, copyBoard(board), newWord.String(), results)
 	}
 
 	// move right up
 	rightUpIdx := pos + 1 - numCols
 	if rightUpIdx >= 0 && isSameRow(pos-numCols, rightUpIdx) {
-		boardCopy := make([]rune, len(board))
-		copy(boardCopy, board)
-		s.solveStartPosition(rightUpIdx, boardCopy, newWord.String(), results)
+		s.solveStartPosition(rightUpIdx, copyBoard(board), newWord.String(), results)
 	}
 }
 
@@ -171,7 +150,7 @@ func toString(l rune) string {
 }
 
 func copyBoard(board []rune) []rune {
-	boardCopy := make([]rune, len(board))
-	copy(boardCopy, board)
-	return boardCopy
+	bCopy := make([]rune, len(board))
+	copy(bCopy, board)
+	return bCopy
 }

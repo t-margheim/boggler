@@ -36,6 +36,9 @@ func generateTrie() *trie.Trie {
 	tr := trie.NewTrie()
 
 	for _, word := range words {
+		if len(word) < 3 {
+			continue
+		}
 		tr.Insert(word)
 	}
 
